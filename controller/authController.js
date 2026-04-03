@@ -30,26 +30,36 @@ export const signup = async (req, res) => {
   }
 };
 
-
 export const login = async (req, res) => {
-  const {email, password} = req.body;
-  const user = User.findOne({email});
-  if(!user){
-    res.json({
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res.json({
       success: false,
       message: "No user Found"
     });
   }
 
-  const checkPassword = bcrypt.compare(password, user.password);
+  const checkPassword = await bcrypt.compare(password, user.password);
+
+  if (!checkPassword) {
+    return res.json({
+      success: false,
+      message: "Wrong password"
+    });
+  }
+
   const token = jwt.sign(
-    {userId: user._id},
+    { userId: user._id },
     process.env.JWT_SECRET,
-    {expiresIn: "1h"}
+    { expiresIn: "1h" }
   );
+
   res.json({
     success: true,
     message: "Login Successfully",
     token
-  }) 
-}
+  });
+};
