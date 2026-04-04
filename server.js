@@ -5,11 +5,13 @@ import dotenv from "dotenv";
 import authRoutes from "./routers/authRoute.js"
 import issueRoute from "./routers/issueRoute.js"
 import commentRoute from "./routers/commentRoute.js";
+import { rateLimit } from "express-rate-limit";
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use("/api", rateLimit)
 
 // Routes
 app.use("/api/auth", authRoutes);

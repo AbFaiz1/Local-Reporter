@@ -33,14 +33,20 @@ export const getIssues = async (req, res) => {
     const limit = 5;
     const skip = (page - 1) * limit;
 
-    const { category, status } = req.query;
+    const { category, status, search, sortBy } = req.query;
     const query = {};
     if(category) query.category = category;
     if(status) query.status = status;
-
+    
+   if(search){}
+    // sorting
+        let sortOption = { createdAt: -1 };
+      if( sortBy === "upvotes"){
+        sortOption = { upvotes: -1};
+      }
     const issues = await Issue.find(query)
       .populate("user", "name email")
-      .sort({ createdAt: -1 })
+      .sort(sortOption)
       .skip(skip)
       .limit(limit);
 
