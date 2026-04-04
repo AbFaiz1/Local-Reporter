@@ -23,7 +23,7 @@ export const getComments = async (req, res) => {
     const { issueId } = req.params;
 
     const comments = await Comment.find({ issue: issueId })
-      .populate("user", "name")
+      .populate("user", "username")
       .sort({ createdAt: -1 });
 
     res.json({ success: true, comments });

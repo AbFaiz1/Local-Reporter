@@ -7,7 +7,8 @@ const issueSchema = mongoose.Schema({
     },
     discription: {
         type: String,
-        required: true
+        required: true,
+        alias: "description"
     },
     category: {
     type: String,

@@ -23,7 +23,22 @@ export const signup = async (req, res) => {
 
     await user.save();
 
-    res.json({ success: true, message: "User created successfully" });
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({
+      success: true,
+      message: "User created successfully",
+      token,
+      user: {
+        _id: user._id,
+        username: user.username,
+        email: user.email
+      }
+    });
 
   } catch (error) {
     res.json({ success: false, message: "Error creating user" });
@@ -60,6 +75,11 @@ export const login = async (req, res) => {
   res.json({
     success: true,
     message: "Login Successfully",
-    token
+    token,
+    user: {
+      _id: user._id,
+      username: user.username,
+      email: user.email
+    }
   });
 };

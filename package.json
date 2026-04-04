@@ -8,7 +8,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "server": "nodemon server.js",
+    "client": "npm --prefix client run dev",
+    "client:build": "npm --prefix client run build",
+    "fix:issue-locations": "node scripts/fixIssueLocations.js",
+    "fix:issue-indexes": "node scripts/resetIssueIndexes.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
